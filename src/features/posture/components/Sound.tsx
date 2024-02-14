@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {  useRef, useState } from 'react';
 import {
     RadioGroup, 
     Radio, 
@@ -10,11 +10,34 @@ import {
 } from "@mui/material";
 import VolumeOffRoundedIcon from '@mui/icons-material/VolumeOffRounded';
 import PlayCircleOutlineRoundedIcon from '@mui/icons-material/PlayCircleOutlineRounded';
-
 import { Volume } from './Volume';
 
 export function Sound() {
-    const [toggle, setToggle] = useState(true);
+    const [play, setPlay] = useState(false);
+    const audioRef = useRef<HTMLAudioElement>(null);
+    console.log('render');
+
+    const start = () => {
+        if (audioRef.current !== null) {
+            audioRef.current.play();
+        }
+    }
+
+    const stop = () => {
+        if (audioRef.current !== null) {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0.0;
+        }
+    }
+
+    const toggle = () => {
+        if (play) {
+            stop();
+        } else {
+            start();
+        }
+        setPlay(!play);
+    }
 
     return (
         <>
@@ -28,9 +51,10 @@ export function Sound() {
                 <SoundChoiceTypography variant="h3">
                     Choose sound
                 </SoundChoiceTypography>
+                <audio ref={audioRef} src={'./windChime.mp3'} />
                 <Button
-                    onClick={() => setToggle(!toggle)}
-                    startIcon={toggle === true ? <VolumeOffRoundedIcon/> : <PlayCircleOutlineRoundedIcon />}
+                    onClick={toggle}
+                    startIcon={play === true ? <VolumeOffRoundedIcon /> :<PlayCircleOutlineRoundedIcon />  }
                 />
             </StackRow>
             <StackRow>
