@@ -13,14 +13,16 @@ import { Timer } from './components/Timer';
 import FormInput  from './components/FormInput'
 
 function PostureWidget() {
-
     const [activeAlarm, setActiveAlarm] = useState<string>('./windChime.mp3');
+    const [volume, setVolume] = useState<number | number[]>(70)
+
     const { onSubmit } = usePosture();
+
     const ref = useRef<HTMLInputElement>(null);
    
     const handleSubmit = () => {
         if(ref.current !== null) {
-            onSubmit(ref.current.value, activeAlarm);
+            onSubmit(ref.current.value, activeAlarm, volume);
         }
     } 
     
@@ -36,6 +38,8 @@ function PostureWidget() {
                     <Sound 
                         setActiveAlarm={setActiveAlarm}
                         activeAlarm={activeAlarm}
+                        volume={volume}
+                        setVolume={setVolume}
                     />
                     <Timer />
                     <StyledButton 

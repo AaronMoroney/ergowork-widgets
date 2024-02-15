@@ -1,4 +1,4 @@
-import {  useRef, useState, FC } from 'react';
+import {  useRef, useState, FC, useEffect } from 'react';
 import {
     RadioGroup, 
     Radio, 
@@ -10,16 +10,24 @@ import {
 } from "@mui/material";
 import VolumeOffRoundedIcon from '@mui/icons-material/VolumeOffRounded';
 import PlayCircleOutlineRoundedIcon from '@mui/icons-material/PlayCircleOutlineRounded';
-import { Volume } from './Volume';
+import Volume  from './Volume';
 
 interface SoundProps  {
     setActiveAlarm: (setActiveAlarm: string) => void;
-   
-    activeAlarm: string
+    activeAlarm: string;
+    volume: number | number[];
+    setVolume: (setVolume: number | number[]) =>  void;
 }
-const Sound: FC<SoundProps> = ({ setActiveAlarm, activeAlarm }) => {
+
+const Sound: FC<SoundProps> = ({ setActiveAlarm, activeAlarm, volume, setVolume }) => {
     const [play, setPlay] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
+
+    useEffect(() => {
+        if (audioRef.current) {
+            audioRef.current.volume = Array.isArray(volume ) ? volume[0] : volume / 100;
+        }
+    }, [volume]);
 
     const handleInputChange = (event: React.SyntheticEvent<Element, Event>) => {
         const input = event.target as HTMLInputElement;
@@ -88,7 +96,10 @@ const Sound: FC<SoundProps> = ({ setActiveAlarm, activeAlarm }) => {
                     /> 
                 </RadioGroup>
             </StackRow>
-            <Volume />
+            <Volume 
+            volume={volume}
+            setVolume={setVolume}
+            />
         </>
     );
 }
