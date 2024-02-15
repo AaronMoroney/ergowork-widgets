@@ -4,9 +4,9 @@ import { saveSettings } from "../helpers/postureHelpers";
 
 export function usePosture() {
     
-    const onSubmit = useCallback((inputValue: string) => {
-        saveSettings(inputValue);
-    }, []) //working
+    const onSubmit = useCallback((inputValue: string, activeAlarm: string) => {
+        saveSettings(inputValue, activeAlarm);
+    }, []); //working
 
     return useMemo(
     () => ({

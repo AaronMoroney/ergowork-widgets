@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
     Card, 
     Stack, 
@@ -8,18 +8,19 @@ import {
 } from "@mui/material";
 
 import { usePosture } from './hooks/usePosture'
-import { Sound } from './components/Sound';
+import  Sound  from './components/Sound';
 import { Timer } from './components/Timer';
 import FormInput  from './components/FormInput'
 
 function PostureWidget() {
+
+    const [activeAlarm, setActiveAlarm] = useState<string>('./windChime.mp3');
     const { onSubmit } = usePosture();
-    
     const ref = useRef<HTMLInputElement>(null);
    
     const handleSubmit = () => {
         if(ref.current !== null) {
-            onSubmit(ref.current.value);
+            onSubmit(ref.current.value, activeAlarm);
         }
     } 
     
@@ -29,10 +30,13 @@ function PostureWidget() {
                 <TitleTypography variant="h1">Posture Timer 💫</TitleTypography>
                 <ContentStack>
                     <FormInput 
-                        label="Alert Message" 
+                        label="Alert message" 
                         ref={ref}
                     />
-                    <Sound />
+                    <Sound 
+                        setActiveAlarm={setActiveAlarm}
+                        activeAlarm={activeAlarm}
+                    />
                     <Timer />
                     <StyledButton 
                         variant='contained'

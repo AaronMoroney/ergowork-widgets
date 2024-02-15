@@ -1,4 +1,4 @@
-import {  useRef, useState } from 'react';
+import {  useRef, useState, FC } from 'react';
 import {
     RadioGroup, 
     Radio, 
@@ -12,10 +12,20 @@ import VolumeOffRoundedIcon from '@mui/icons-material/VolumeOffRounded';
 import PlayCircleOutlineRoundedIcon from '@mui/icons-material/PlayCircleOutlineRounded';
 import { Volume } from './Volume';
 
-export function Sound() {
+interface SoundProps  {
+    setActiveAlarm: (setActiveAlarm: string) => void;
+   
+    activeAlarm: string
+}
+const Sound: FC<SoundProps> = ({ setActiveAlarm, activeAlarm }) => {
     const [play, setPlay] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
-    console.log('render');
+
+    const handleInputChange = (event: React.SyntheticEvent<Element, Event>) => {
+        const input = event.target as HTMLInputElement;
+        setPlay(false);
+        setActiveAlarm(input.value);
+    }
 
     const start = () => {
         if (audioRef.current !== null) {
@@ -31,36 +41,52 @@ export function Sound() {
     }
 
     const toggle = () => {
-        if (play) {
-            stop();
-        } else {
-            start();
-        }
+        play ? stop() : start();
         setPlay(!play);
     }
 
     return (
         <>
-            <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="Tweet"
-                name="radio-buttons-group"
-            >   
-            </RadioGroup>
             <StackRow>
                 <SoundChoiceTypography variant="h3">
                     Choose sound
                 </SoundChoiceTypography>
-                <audio ref={audioRef} src={'./windChime.mp3'} />
+                <audio 
+                    ref={audioRef} 
+                    src={activeAlarm} 
+                    />
                 <Button
                     onClick={toggle}
                     startIcon={play === true ? <VolumeOffRoundedIcon /> :<PlayCircleOutlineRoundedIcon />  }
+                    sx={{minWidth: 0}}
                 />
             </StackRow>
             <StackRow>
-                <FormControlLabel value="" control={<Radio />} label="Tweet" />
-                <FormControlLabel value="" control={<Radio />} label="Chime" />
-                <FormControlLabel value="" control={<Radio />} label="Wave" />
+                <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    defaultValue="Tweet"
+                    name="radio-buttons-group"
+                    sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}
+                > 
+                    <FormControlLabel 
+                        onChange={handleInputChange}
+                        value='./softChime.mp3' 
+                        control={<Radio />} 
+                        label="Soft Chime" 
+                    />
+                    <FormControlLabel 
+                        onChange={handleInputChange}
+                        value='./singingBowl.mp3'
+                        control={<Radio />} 
+                        label="Singing Bowl"
+                    />
+                    <FormControlLabel 
+                        onChange={handleInputChange}
+                        value="./ohm.mp3" 
+                        control={<Radio />} 
+                        label="Ohm" 
+                    /> 
+                </RadioGroup>
             </StackRow>
             <Volume />
         </>
@@ -80,3 +106,5 @@ const StackRow = styled(Stack)({
     flexDirection: 'row', 
     justifyContent: 'space-between'
 });
+
+export default Sound

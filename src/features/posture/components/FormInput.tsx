@@ -9,7 +9,7 @@ const FormInput = forwardRef<HTMLInputElement,{ label: string }>(function FormIn
             <TextField 
                 id="standard-basic" 
                 label={label} 
-                variant="standard" 
+                variant="outlined" 
                 //https://mui.com/material-ui/api/text-field/
                 //The inputRef prop is specifically designed for passing a ref to the input element within the TextField
                 inputRef={ref}
