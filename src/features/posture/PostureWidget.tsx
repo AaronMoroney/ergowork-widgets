@@ -1,53 +1,53 @@
-import { useRef, useState } from "react";
+import { useState, useEffect } from "react";
 import {
     Card, 
     Stack, 
     Typography,   
-    Button,
     styled
 } from "@mui/material";
 
-import { usePosture } from './hooks/usePosture'
-import  Sound  from './components/Sound';
-import { Timer } from './components/Timer';
-import FormInput  from './components/FormInput'
+import SettingsIcon from '@mui/icons-material/Settings';
+import Settings from "./components/Settings";
+import Display from "./components/Display";
+import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
+import { fetchStoredSettings } from "./helpers/PostureHelpers";
 
 function PostureWidget() {
-    const [activeAlarm, setActiveAlarm] = useState<string>('./windChime.mp3');
-    const [volume, setVolume] = useState<number | number[]>(70)
+    const [toggleSettings, setToggleSettings] = useState(false); 
+    const [time, setTime] = useState(5);
 
-    const { onSubmit } = usePosture();
-
-    const ref = useRef<HTMLInputElement>(null);
-   
-    const handleSubmit = () => {
-        if(ref.current !== null) {
-            onSubmit(ref.current.value, activeAlarm, volume);
+    useEffect(() => {
+        const storedSettings = fetchStoredSettings();
+        if (storedSettings) {
+            setTime(storedSettings.time);
         }
-    } 
-    
+    }, [])
+
     return (
         <>
-            <StyledCard>
-                <TitleTypography variant="h1">Posture Timer 💫</TitleTypography>
+            <StyledCard sx={{height: toggleSettings ? '50vh' : 'auto'}}>
+                <Stack sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <TitleTypography variant="h1">Posture Timer 💫</TitleTypography>
+                    {
+                        toggleSettings ? 
+                        <AccessAlarmIcon 
+                            onClick={()=>setToggleSettings(!toggleSettings)}
+                        />
+                        : <SettingsIcon
+                            onClick={()=>setToggleSettings(!toggleSettings)}
+                        />
+                    }
+                </Stack>
                 <ContentStack>
-                    <FormInput 
-                        label="Alert message" 
-                        ref={ref}
+                    {toggleSettings ? 
+                    <Settings
+                        time={time}
+                        setTime={setTime}
+                    /> :
+                    <Display
+                        time={time}
                     />
-                    <Sound 
-                        setActiveAlarm={setActiveAlarm}
-                        activeAlarm={activeAlarm}
-                        volume={volume}
-                        setVolume={setVolume}
-                    />
-                    <Timer />
-                    <StyledButton 
-                        variant='contained'
-                        onClick={handleSubmit}
-                        >
-                            Save Settings
-                    </StyledButton>
+                    }
                 </ContentStack>
             </StyledCard>
         </>
@@ -56,7 +56,6 @@ function PostureWidget() {
 
 // Styled components
 const StyledCard = styled(Card)({
-    height: '50vh', 
     padding: '20px', 
     borderRadius: '30px', 
     display: 'flex', 
@@ -75,10 +74,6 @@ const ContentStack = styled(Stack)({
     padding: '15px 30px', 
     height: '90%', 
     backgroundColor: '#dad3ff14', 
-    borderRadius: '30px'
-});
-
-const StyledButton = styled(Button)({
     borderRadius: '30px'
 });
 

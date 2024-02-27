@@ -12,7 +12,6 @@ const Volume: FC<VolumeProps> = ({volume, setVolume}) => {
 
     const handleVolumeChange = (event: Event, newValue: number | number[]) => {
         setVolume(newValue);
-        console.log(volume);
     };
 
     return (
