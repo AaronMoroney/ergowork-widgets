@@ -29,11 +29,11 @@ const Sound: FC<SoundProps> = ({ setActiveAlarm, activeAlarm, currentVolume }) =
     useEffect(() => {
         //volume adjusted
         if (audioRef.current) {
+            //?
             const newVolume = Array.isArray( currentVolume ) ? currentVolume[0] : currentVolume / 100;
             audioRef.current.volume = newVolume
         }
-
-        dispatch(volumeChange(currentVolume))
+        dispatch(volumeChange(currentVolume));
     }, [currentVolume]);
 
     const handleInputChange = (event: React.SyntheticEvent<Element, Event>) => {

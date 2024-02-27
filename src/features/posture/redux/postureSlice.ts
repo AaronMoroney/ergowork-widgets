@@ -5,7 +5,7 @@ export interface userSettingsState {
     // activeAlarm: string,
     volume: number | number[], 
     time: number,
-    // alert: boolean
+    alert: boolean
 }
 
 const initialState: userSettingsState = {
@@ -13,7 +13,7 @@ const initialState: userSettingsState = {
     // activeAlarm: "./windChime.mp3",
     volume: 50, 
     time: 5,
-    // alert: true
+    alert: false
 }
 
 export const postureSlice = createSlice({
@@ -32,14 +32,15 @@ export const postureSlice = createSlice({
                 }
             },
             volumeChange: (state, action) => {
-                console.log(state.volume);
-                console.log(action.payload);
                 state.volume = action.payload;
+            },
+            alertChange: (state, action) => {
+                state.alert = action.payload;
             }
         },
     },
 )
 
-export const { incrementTime, decrementTime, time, volumeChange } = postureSlice.actions
+export const { incrementTime, decrementTime, time, volumeChange, alertChange } = postureSlice.actions
 export default postureSlice.reducer
   
