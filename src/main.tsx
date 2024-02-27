@@ -4,7 +4,8 @@ import ThemeProvider from "@mui/material/styles/ThemeProvider"
 import CssBaseline from '@mui/material/CssBaseline';
 import { createRoot } from "react-dom/client";
 import { App } from './app';
-// import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { store } from './app/redux/store'
+import { Provider } from 'react-redux'
 
 
 const darkTheme = createTheme({
@@ -17,11 +18,13 @@ const root = document.getElementById("root");
 if (root) {
   createRoot(root).render(
     <React.StrictMode>
-       <ThemeProvider theme={darkTheme}>
-          <CssBaseline>
-            <App/>
-          </CssBaseline>
-       </ThemeProvider> 
+      <Provider store={store}>
+        <ThemeProvider theme={darkTheme}>
+            <CssBaseline>
+              <App/>
+            </CssBaseline>
+        </ThemeProvider> 
+      </Provider>
     </React.StrictMode>
   );
 }

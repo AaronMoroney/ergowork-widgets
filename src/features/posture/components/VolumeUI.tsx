@@ -2,16 +2,18 @@ import { FC } from 'react';
 import VolumeUp from '@mui/icons-material/VolumeUp';
 import VolumeDown from '@mui/icons-material/VolumeDown';
 import { Slider, Stack, Typography, styled } from "@mui/material";
+import { useDispatch } from 'react-redux';
+import { volumeChange } from '../redux/postureSlice';
 
 interface VolumeProps {
-    volume: number | number[],
-    setVolume: (setVolume: number | number[] ) => void
+    currentVolume: number | number[],
 }
 
-const Volume: FC<VolumeProps> = ({volume, setVolume}) => {
+const VolumeUI: FC<VolumeProps> = ({ currentVolume }) => {
+    const dispatch = useDispatch();
 
     const handleVolumeChange = (event: Event, newValue: number | number[]) => {
-        setVolume(newValue);
+        dispatch(volumeChange(newValue));
     };
 
     return (
@@ -21,8 +23,8 @@ const Volume: FC<VolumeProps> = ({volume, setVolume}) => {
                 <VolumeDown />
                 <Slider 
                     aria-label="Volume" 
-                    defaultValue={volume}
-                    value={volume}
+                    defaultValue={currentVolume}
+                    value={currentVolume}
                     onChange={handleVolumeChange}
                 />
                 <VolumeUp />
@@ -44,4 +46,4 @@ const VolumeStack = styled(Stack)({
     marginBottom: 1
 });
 
-export default Volume
+export default VolumeUI;

@@ -5,23 +5,27 @@ import {
     Typography,   
     styled
 } from "@mui/material";
-
 import SettingsIcon from '@mui/icons-material/Settings';
 import Settings from "./components/Settings";
 import Display from "./components/Display";
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
+
 import { fetchStoredSettings } from "./helpers/PostureHelpers";
+import type { RootState } from '../../app/redux/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { time } from './redux/postureSlice';
 
 function PostureWidget() {
     const [toggleSettings, setToggleSettings] = useState(false); 
-    const [time, setTime] = useState(5);
+    const count = useSelector((state: RootState) => state.postureState.time);
+    const dispatch = useDispatch()
 
     useEffect(() => {
         const storedSettings = fetchStoredSettings();
         if (storedSettings) {
-            setTime(storedSettings.time);
+            dispatch(time(storedSettings.time));
         }
-    }, [])
+    }, [dispatch]);
 
     return (
         <>
@@ -33,7 +37,8 @@ function PostureWidget() {
                         <AccessAlarmIcon 
                             onClick={()=>setToggleSettings(!toggleSettings)}
                         />
-                        : <SettingsIcon
+                        : 
+                        <SettingsIcon
                             onClick={()=>setToggleSettings(!toggleSettings)}
                         />
                     }
@@ -41,11 +46,11 @@ function PostureWidget() {
                 <ContentStack>
                     {toggleSettings ? 
                     <Settings
-                        time={time}
-                        setTime={setTime}
-                    /> :
+                        time={count}
+                    /> 
+                    :
                     <Display
-                        time={time}
+                        time={count}
                     />
                     }
                 </ContentStack>

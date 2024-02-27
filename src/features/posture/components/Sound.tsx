@@ -10,24 +10,31 @@ import {
 } from "@mui/material";
 import VolumeOffRoundedIcon from '@mui/icons-material/VolumeOffRounded';
 import PlayCircleOutlineRoundedIcon from '@mui/icons-material/PlayCircleOutlineRounded';
-import Volume  from './Volume';
+import { useDispatch } from 'react-redux'
+
+import VolumeUI  from './VolumeUI';
+import { volumeChange } from '../redux/postureSlice';
 
 interface SoundProps  {
     setActiveAlarm: (setActiveAlarm: string) => void;
     activeAlarm: string;
-    volume: number | number[];
-    setVolume: (setVolume: number | number[]) =>  void;
+    currentVolume: number | number[];
 }
 
-const Sound: FC<SoundProps> = ({ setActiveAlarm, activeAlarm, volume, setVolume }) => {
+const Sound: FC<SoundProps> = ({ setActiveAlarm, activeAlarm, currentVolume }) => {
     const [play, setPlay] = useState(false);
     const audioRef = useRef<HTMLAudioElement>(null);
+    const dispatch = useDispatch();
 
     useEffect(() => {
+        //volume adjusted
         if (audioRef.current) {
-            audioRef.current.volume = Array.isArray(volume ) ? volume[0] : volume / 100;
+            const newVolume = Array.isArray( currentVolume ) ? currentVolume[0] : currentVolume / 100;
+            audioRef.current.volume = newVolume
         }
-    }, [volume]);
+
+        dispatch(volumeChange(currentVolume))
+    }, [currentVolume]);
 
     const handleInputChange = (event: React.SyntheticEvent<Element, Event>) => {
         const input = event.target as HTMLInputElement;
@@ -96,9 +103,8 @@ const Sound: FC<SoundProps> = ({ setActiveAlarm, activeAlarm, volume, setVolume 
                     /> 
                 </RadioGroup>
             </StackRow>
-            <Volume 
-            volume={volume}
-            setVolume={setVolume}
+            <VolumeUI
+                currentVolume={currentVolume}
             />
         </>
     );

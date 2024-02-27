@@ -8,5 +8,5 @@ export const fetchStoredSettings = () => {
         console.error(error);
       }
     }
-   return {}; 
+  return {}; 
 };

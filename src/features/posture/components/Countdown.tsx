@@ -3,24 +3,28 @@ import { Stack, Typography, Button, Switch, FormControlLabel, styled } from "@mu
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 
+import { useDispatch } from 'react-redux'
+import { decrementTime, incrementTime } from '../redux/postureSlice'
+
 interface countdownProps {
     time: number,
-    setTime: (setTime: number) => void, 
     alert: boolean, 
     setAlert: (setAlert: boolean) => void, 
 }
 
-const Countdown: FC<countdownProps> = ({setTime, time, setAlert, alert}) => {
+const Countdown: FC<countdownProps> = ({ time, setAlert, alert}) => {
+    const dispatch = useDispatch();
+
     const handlePlusClick = () => {
-        setTime(
-            time + 1
-        );
-    }
+        dispatch(incrementTime());
+    };
+
     const handleMinusClick = () => {
-        setTime(
-            time > 1 ? time - 1 : time = 0
-        );
-    }
+        if (time > 1) {
+            dispatch(decrementTime());
+        }
+    };
+    
     const timerToggle = () => {
         setAlert(!alert);
     }
