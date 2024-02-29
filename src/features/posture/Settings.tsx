@@ -1,4 +1,4 @@
-import { useRef, useState, FC } from "react";
+import { useRef, FC } from "react";
 import { Button, styled } from "@mui/material";
 import type { RootState } from '../../app/redux/store';
 import { useSelector } from 'react-redux';
@@ -11,20 +11,24 @@ import FormInput  from './components/FormInput'
 interface SettingsProps {
     time: number;           
     setToggleSettings:(value: boolean)=> void;
+    fetchedSettings: {}
 }
 
 const Settings: FC<SettingsProps> = ({ time, setToggleSettings }) => {
-    const [activeAlarm, setActiveAlarm] = useState<string>('./windChime.mp3');
-    const al = useSelector((state: RootState) => state.postureState.alert); //alert state
-    const vol = useSelector((state: RootState) => state.postureState.volume); //vol state
-
-    const ref = useRef<HTMLInputElement>(null);
-   
     const { onSubmit } = usePosture();
+    //redux states
+    const alarm = useSelector((state: RootState) => state.userSettingsState.userSettings.activeAlarm); //alarm state
+    const alert = useSelector((state: RootState) => state.userSettingsState.userSettings.alert); //alert state
+    const vol = useSelector((state: RootState) => state.userSettingsState.userSettings.volume); //vol state
+    let message = useSelector((state: RootState) => state.userSettingsState.userSettings.alertMessage); //vol state
 
+    const messageRef = useRef<HTMLInputElement>(null);
+   
     const handleSubmit = () => {
-        if(ref.current !== null) {
-            onSubmit(ref.current.value, activeAlarm, vol, time, al);
+        if(messageRef.current !== null) {
+            //assign message state to the value of the ref
+            message = messageRef.current.value;
+            onSubmit(message, alarm, vol, time, alert);
             setToggleSettings(false);
         }
     } 
@@ -32,17 +36,16 @@ const Settings: FC<SettingsProps> = ({ time, setToggleSettings }) => {
     return (
         <>
             <FormInput 
-                label="Alert message" 
-                ref={ref}
+                label={message} 
+                ref={messageRef}
             />
             <Sound 
-                setActiveAlarm={setActiveAlarm}
-                activeAlarm={activeAlarm}
+                alarm={alarm}
                 currentVolume={vol} 
             />
             <Countdown 
                 time={time}
-                al={al}
+                alert={alert}
             />
             <StyledButton 
                 variant='contained'

@@ -1,0 +1,9 @@
+{
+    "userSettings": {
+        "alertMessage": "move",
+        "activeAlarm": "./softChime.mp3",
+        "volume": 100, 
+        "time": 4,
+        "alert": true
+    }  
+}

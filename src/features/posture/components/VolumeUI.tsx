@@ -3,7 +3,7 @@ import VolumeUp from '@mui/icons-material/VolumeUp';
 import VolumeDown from '@mui/icons-material/VolumeDown';
 import { Slider, Stack, Typography, styled } from "@mui/material";
 import { useDispatch } from 'react-redux';
-import { volumeChange } from '../redux/postureSlice';
+import { volumeChange } from '../redux/userSettingsSlice';
 
 interface VolumeProps {
     currentVolume: number | number[],
@@ -12,10 +12,10 @@ interface VolumeProps {
 const VolumeUI: FC<VolumeProps> = ({ currentVolume }) => {
     const dispatch = useDispatch();
 
-    const handleVolumeChange = (event: Event, newValue: number | number[]) => {
+    const handleVolumeChange = (_event: Event, newValue: number | number[]) => {
         dispatch(volumeChange(newValue));
     };
-
+    
     return (
         <>
             <AlertTypography variant="h3"> Alert volume</AlertTypography>
@@ -32,7 +32,6 @@ const VolumeUI: FC<VolumeProps> = ({ currentVolume }) => {
         </>
     );
 }
-
 
 // Create styled components
 const AlertTypography = styled(Typography)({

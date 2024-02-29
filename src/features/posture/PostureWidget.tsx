@@ -9,25 +9,22 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import Settings from "./Settings";
 import Display from "./components/Display";
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
+import type { AppDispatch } from '../../app/redux/store';
 
-import { fetchStoredSettings } from "./helpers/PostureHelpers";
 import type { RootState } from '../../app/redux/store';
 import { useSelector, useDispatch } from 'react-redux';
-import { time } from './redux/postureSlice';
+import { fetchSettings } from "./redux/postureAPI";
 
 function PostureWidget() {
     //can leave the toggle as react state
     const [toggleSettings, setToggleSettings] = useState(false); 
-    const count = useSelector((state: RootState) => state.postureState.time);
-    
-    const dispatch = useDispatch()
-
+    const dispatch = useDispatch<AppDispatch>();
+   
     useEffect(() => {
-        const storedSettings = fetchStoredSettings();
-        if (storedSettings) {
-            dispatch(time(storedSettings.time));
-        }
-    }, [dispatch]);
+        dispatch(fetchSettings());
+    }, []); 
+
+    const fetchedSettings = useSelector((state: RootState) => state.userSettingsState.userSettings);
 
     return (
         <>
@@ -48,12 +45,13 @@ function PostureWidget() {
                 <ContentStack>
                     {toggleSettings ? 
                     <Settings
-                        time={count}
+                        fetchedSettings={fetchedSettings}
+                        time={fetchedSettings.time}
                         setToggleSettings={setToggleSettings}
                     /> 
                     :
                     <Display
-                        time={count}
+                        time={fetchedSettings.time}
                     />
                     }
                 </ContentStack>

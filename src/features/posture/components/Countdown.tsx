@@ -4,14 +4,14 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 
 import { useDispatch } from 'react-redux'
-import { decrementTime, incrementTime, alertChange } from '../redux/postureSlice'
+import { decrementTime, incrementTime, alertChange } from '../redux/userSettingsSlice'
 
 interface countdownProps {
     time: number,
-    al: boolean, 
+    alert: boolean, 
 }
 
-const Countdown: FC<countdownProps> = ({ time, al }) => {
+const Countdown: FC<countdownProps> = ({ time, alert }) => {
     const dispatch = useDispatch();
 
     const handlePlusClick = () => {
@@ -25,7 +25,7 @@ const Countdown: FC<countdownProps> = ({ time, al }) => {
     };
     
     const timerToggle = () => {
-        dispatch(alertChange(!al));
+        dispatch(alertChange(!alert));
     }
 
     return (
@@ -52,8 +52,8 @@ const Countdown: FC<countdownProps> = ({ time, al }) => {
                     </ButtonStack>
                 </TimeDisplayStack>
                 <FormControlLabel 
-                    control={<Switch centerRipple checked={al ? true : false} />} 
-                    label={al ? 'alerts ✅' : 'alerts ❌'} 
+                    control={<Switch centerRipple checked={alert ? true : false} />} 
+                    label={alert ? 'alerts ✅' : 'alerts ❌'} 
                     onClick={timerToggle}
                 />
             </IntervalStack>
