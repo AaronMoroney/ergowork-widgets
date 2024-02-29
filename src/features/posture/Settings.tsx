@@ -20,24 +20,29 @@ const Settings: FC<SettingsProps> = ({ time, setToggleSettings }) => {
     const alarm = useSelector((state: RootState) => state.userSettingsState.userSettings.activeAlarm); //alarm state
     const alert = useSelector((state: RootState) => state.userSettingsState.userSettings.alert); //alert state
     const vol = useSelector((state: RootState) => state.userSettingsState.userSettings.volume); //vol state
-    let message = useSelector((state: RootState) => state.userSettingsState.userSettings.alertMessage); //vol state
+    const message = useSelector((state: RootState) => state.userSettingsState.userSettings.alertMessage); //vol state
 
-    const messageRef = useRef<HTMLInputElement>(null);
-   
+    const messageRef = useRef(null);
+
+    let newUserSettings = {
+        id: "posture",
+        alertMessage: message,
+        activeAlarm: alarm,
+        volume: vol,
+        time: time,
+        alert: alert
+    }
+
     const handleSubmit = () => {
-        if(messageRef.current !== null) {
-            //assign message state to the value of the ref
-            message = messageRef.current.value;
-            onSubmit(message, alarm, vol, time, alert);
-            setToggleSettings(false);
-        }
+        onSubmit(newUserSettings);
+        setToggleSettings(false);
     } 
 
     return (
         <>
             <FormInput 
-                label={message} 
-                ref={messageRef}
+                message={message} 
+                ref={messageRef.current}
             />
             <Sound 
                 alarm={alarm}

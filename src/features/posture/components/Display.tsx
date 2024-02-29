@@ -1,10 +1,5 @@
 import { FC } from "react";
-import {
-    Button, 
-    styled, 
-    Stack, 
-    Typography
-} from "@mui/material";
+import { Button, styled, Stack, Typography } from "@mui/material";
 
 interface displayProps {
     time: number,

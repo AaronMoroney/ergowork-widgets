@@ -1,14 +1,14 @@
 import { forwardRef} from "react";
 import { TextField } from "@mui/material";
 
-const FormInput = forwardRef<HTMLInputElement,{ label: string }>(function FormInput({label}, ref) {
+const FormInput = forwardRef<HTMLInputElement,{ message: string }>(function FormInput({message}, ref) {
     return (
         <>
             <TextField 
                 id="standard-basic" 
-                label={label} 
+                label={message} 
                 variant="outlined" 
-                inputRef={ref}
+                ref={ref}
             />
         </>
     )

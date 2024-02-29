@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchSettings } from './postureAPI';
+import { fetchSettings, updateSettings } from './postureAPI';
 import { UserSettingsType } from '../../../types/UserSettingsType';
 
 export interface userSettingsState {
@@ -7,30 +7,26 @@ export interface userSettingsState {
 }
 
 const initialState: userSettingsState = {
-    //placeholoder values, replaced by vals from DB fetch
-    userSettings : {
+    //placeholoder values, will be replaced by vals from DB fetch
+    userSettings: {
+        id: "",
         alertMessage: "",
         activeAlarm: "",
         volume: 0, 
         time: 0,
-        alert: false,  
-    }
+        alert: false,
+    } 
 };
 
 export const userSettingsSlice = createSlice({
     name: 'userSettings',
     initialState,
     reducers: {
-        time: (state) => {
-            state.userSettings.time
-        },
-        incrementTime: (state) => {
-            state.userSettings.time += 1
+        incrementTime: (state, ) => {
+            state.userSettings.time += 1;
         },
         decrementTime: (state) => {
-            if (state.userSettings.time > 0) {
-                state.userSettings.time -= 1;
-            }
+            state.userSettings.time -= 1;
         },
         volumeChange: (state, action) => {
             state.userSettings.volume = action.payload;
@@ -48,10 +44,14 @@ export const userSettingsSlice = createSlice({
     extraReducers: (builder) => {
         //FETCH
         builder.addCase(fetchSettings.fulfilled, (state, action) => {
-            state.userSettings = action.payload;
+            state.userSettings = action.payload[0];
         });
+        //PATCH
+        builder.addCase(updateSettings.fulfilled, (state, action)=> {
+            state.userSettings = action.payload;
+        })
     },
 });
    
-export const { incrementTime, decrementTime, time, volumeChange, alertChange, activeAlarm, alertMessage } = userSettingsSlice.actions;
+export const { incrementTime, decrementTime, volumeChange, alertChange, activeAlarm, alertMessage } = userSettingsSlice.actions;
 export default userSettingsSlice.reducer;

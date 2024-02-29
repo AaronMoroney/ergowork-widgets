@@ -1,9 +1,12 @@
 {
-    "userSettings": {
-        "alertMessage": "move",
-        "activeAlarm": "./softChime.mp3",
-        "volume": 100, 
-        "time": 4,
-        "alert": true
-    }  
+  "userSettings": [
+    {
+      "id": "postureSettings",
+      "alertMessage": "message here",
+      "activeAlarm": "./ohm.mp3",
+      "volume": 99,
+      "time": 25,
+      "alert": false
+    }
+  ]
 }
