@@ -5,23 +5,28 @@ import {
     Typography,   
     styled
 } from "@mui/material";
-
 import SettingsIcon from '@mui/icons-material/Settings';
-import Settings from "./components/Settings";
-import Display from "./components/Display";
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
-import { fetchStoredSettings } from "./helpers/PostureHelpers";
+import type { AppDispatch } from '../../shared/store/store';
+import { useSelector, useDispatch } from 'react-redux';
+
+import type { RootState } from '../../shared/store/store';
+import { fetchSettings } from "../../shared/api/postureAPI";
+import { formatTimeString } from "../helpers/PostureHelpers";
+import Settings from "./Settings";
+import Display from "./Display";
+
 
 function PostureWidget() {
     const [toggleSettings, setToggleSettings] = useState(false); 
-    const [time, setTime] = useState(5);
-
+    const dispatch = useDispatch<AppDispatch>();
+   
     useEffect(() => {
-        const storedSettings = fetchStoredSettings();
-        if (storedSettings) {
-            setTime(storedSettings.time);
-        }
-    }, [])
+        dispatch(fetchSettings());
+    }, []); 
+
+    const fetchedSettings = useSelector((state: RootState) => state.userSettingsState.userSettings);
+    let timeConvert = formatTimeString(fetchedSettings.time);
 
     return (
         <>
@@ -33,7 +38,8 @@ function PostureWidget() {
                         <AccessAlarmIcon 
                             onClick={()=>setToggleSettings(!toggleSettings)}
                         />
-                        : <SettingsIcon
+                        : 
+                        <SettingsIcon
                             onClick={()=>setToggleSettings(!toggleSettings)}
                         />
                     }
@@ -41,11 +47,13 @@ function PostureWidget() {
                 <ContentStack>
                     {toggleSettings ? 
                     <Settings
-                        time={time}
-                        setTime={setTime}
-                    /> :
+                        fetchedSettings={fetchedSettings}
+                        time={timeConvert}
+                        setToggleSettings={setToggleSettings}
+                    /> 
+                    :
                     <Display
-                        time={time}
+                        time={timeConvert}
                     />
                     }
                 </ContentStack>

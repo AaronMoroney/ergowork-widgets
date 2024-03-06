@@ -3,32 +3,37 @@ import { Stack, Typography, Button, Switch, FormControlLabel, styled } from "@mu
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 
+import { useDispatch } from 'react-redux'
+import { decrementTime, incrementTime, alertChange } from '../slice'
+import { formatTimeNumber } from '../../../../widgits/helpers/PostureHelpers';
+
 interface countdownProps {
-    time: number,
-    setTime: (setTime: number) => void, 
+    time: string,
     alert: boolean, 
-    setAlert: (setAlert: boolean) => void, 
 }
 
-const Countdown: FC<countdownProps> = ({setTime, time, setAlert, alert}) => {
+const Timer: FC<countdownProps> = ({ time, alert }) => {
+    const dispatch = useDispatch();
+
     const handlePlusClick = () => {
-        setTime(
-            time + 1
-        );
-    }
+        dispatch(incrementTime(30));
+    };
+
     const handleMinusClick = () => {
-        setTime(
-            time > 1 ? time - 1 : time = 0
-        );
-    }
+        let timeNumber = formatTimeNumber(time);
+        if (timeNumber > 1) {
+            dispatch(decrementTime(30));
+        }
+    };
+    
     const timerToggle = () => {
-        setAlert(!alert);
+        dispatch(alertChange(!alert));
     }
 
     return (
         <>
             <TitleTypography variant="h3">
-                Set interval minutes
+                Set interval
             </TitleTypography>
             <IntervalStack spacing={2} direction="row">
                 <TimeDisplayStack>
@@ -49,7 +54,7 @@ const Countdown: FC<countdownProps> = ({setTime, time, setAlert, alert}) => {
                     </ButtonStack>
                 </TimeDisplayStack>
                 <FormControlLabel 
-                    control={<Switch defaultChecked />} 
+                    control={<Switch centerRipple checked={alert ? true : false} />} 
                     label={alert ? 'alerts ✅' : 'alerts ❌'} 
                     onClick={timerToggle}
                 />
@@ -58,7 +63,7 @@ const Countdown: FC<countdownProps> = ({setTime, time, setAlert, alert}) => {
     );
 }
 
-export default Countdown;
+export default Timer;
 
 // Styled components
 const TitleTypography = styled(Typography)({

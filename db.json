@@ -1,0 +1,12 @@
+{
+  "userSettings": [
+    {
+      "id": "postureSettings",
+      "alertMessage": "message",
+      "activeAlarm": "./singingBowl.mp3",
+      "volume": 34,
+      "time": 150,
+      "alert": false
+    }
+  ]
+}

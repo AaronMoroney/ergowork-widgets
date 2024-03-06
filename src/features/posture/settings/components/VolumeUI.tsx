@@ -2,18 +2,21 @@ import { FC } from 'react';
 import VolumeUp from '@mui/icons-material/VolumeUp';
 import VolumeDown from '@mui/icons-material/VolumeDown';
 import { Slider, Stack, Typography, styled } from "@mui/material";
+import { useDispatch } from 'react-redux';
+
+import { volumeChange } from '../slice';
 
 interface VolumeProps {
-    volume: number | number[],
-    setVolume: (setVolume: number | number[] ) => void
+    currentVolume: number | number[],
 }
 
-const Volume: FC<VolumeProps> = ({volume, setVolume}) => {
+const VolumeUI: FC<VolumeProps> = ({ currentVolume }) => {
+    const dispatch = useDispatch();
 
-    const handleVolumeChange = (event: Event, newValue: number | number[]) => {
-        setVolume(newValue);
+    const handleVolumeChange = (_event: Event, newValue: number | number[]) => {
+        dispatch(volumeChange(newValue));
     };
-
+    
     return (
         <>
             <AlertTypography variant="h3"> Alert volume</AlertTypography>
@@ -21,8 +24,8 @@ const Volume: FC<VolumeProps> = ({volume, setVolume}) => {
                 <VolumeDown />
                 <Slider 
                     aria-label="Volume" 
-                    defaultValue={volume}
-                    value={volume}
+                    defaultValue={currentVolume}
+                    value={currentVolume}
                     onChange={handleVolumeChange}
                 />
                 <VolumeUp />
@@ -30,7 +33,6 @@ const Volume: FC<VolumeProps> = ({volume, setVolume}) => {
         </>
     );
 }
-
 
 // Create styled components
 const AlertTypography = styled(Typography)({
@@ -44,4 +46,4 @@ const VolumeStack = styled(Stack)({
     marginBottom: 1
 });
 
-export default Volume
+export default VolumeUI;

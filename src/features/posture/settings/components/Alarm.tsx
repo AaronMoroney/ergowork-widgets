@@ -1,56 +1,31 @@
-import {  useRef, useState, FC, useEffect } from 'react';
-import {
-    RadioGroup, 
-    Radio, 
-    Stack, 
-    Typography,
-    FormControlLabel,
-    Button,
-    styled
-} from "@mui/material";
+import { FC, useEffect } from 'react';
+import { RadioGroup, Radio, Stack, Typography,FormControlLabel, Button,styled } from "@mui/material";
 import VolumeOffRoundedIcon from '@mui/icons-material/VolumeOffRounded';
 import PlayCircleOutlineRoundedIcon from '@mui/icons-material/PlayCircleOutlineRounded';
-import Volume  from './Volume';
 
-interface SoundProps  {
-    setActiveAlarm: (setActiveAlarm: string) => void;
-    activeAlarm: string;
-    volume: number | number[];
-    setVolume: (setVolume: number | number[]) =>  void;
+import { usePosture  } from '../../../../widgits/hooks/usePosture';
+
+interface AlarmProps {
+    alarm: string;
+    currentVolume: number | number[];
 }
 
-const Sound: FC<SoundProps> = ({ setActiveAlarm, activeAlarm, volume, setVolume }) => {
-    const [play, setPlay] = useState(false);
-    const audioRef = useRef<HTMLAudioElement>(null);
+const Alarm: FC<AlarmProps>= ({ alarm, currentVolume }) => {
+    const { onSetAlarmChoice, onPlayToggle, play, setPlay, audioRef } = usePosture(); 
 
+    //this effect controls the volume played when changed
     useEffect(() => {
+        //if volume adjusted
         if (audioRef.current) {
-            audioRef.current.volume = Array.isArray(volume ) ? volume[0] : volume / 100;
+            const newVolume = Array.isArray( currentVolume ) ? currentVolume[0] : currentVolume / 100;
+            audioRef.current.volume = newVolume;
         }
-    }, [volume]);
+    }, [currentVolume]);
 
-    const handleInputChange = (event: React.SyntheticEvent<Element, Event>) => {
+    const handleChangeAlarmChoice = (event: React.SyntheticEvent<Element, Event>) => {
         const input = event.target as HTMLInputElement;
         setPlay(false);
-        setActiveAlarm(input.value);
-    }
-
-    const start = () => {
-        if (audioRef.current !== null) {
-            audioRef.current.play();
-        }
-    }
-
-    const stop = () => {
-        if (audioRef.current !== null) {
-            audioRef.current.pause();
-            audioRef.current.currentTime = 0.0;
-        }
-    }
-
-    const toggle = () => {
-        play ? stop() : start();
-        setPlay(!play);
+        onSetAlarmChoice(input.value);
     }
 
     return (
@@ -61,10 +36,10 @@ const Sound: FC<SoundProps> = ({ setActiveAlarm, activeAlarm, volume, setVolume 
                 </SoundChoiceTypography>
                 <audio 
                     ref={audioRef} 
-                    src={activeAlarm} 
+                    src={alarm} 
                     />
                 <Button
-                    onClick={toggle}
+                    onClick={onPlayToggle}
                     startIcon={play === true ? <VolumeOffRoundedIcon /> :<PlayCircleOutlineRoundedIcon />  }
                     sx={{minWidth: 0}}
                 />
@@ -77,34 +52,31 @@ const Sound: FC<SoundProps> = ({ setActiveAlarm, activeAlarm, volume, setVolume 
                     sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}
                 > 
                     <FormControlLabel 
-                        onChange={handleInputChange}
+                        onChange={handleChangeAlarmChoice}
                         value='./softChime.mp3' 
-                        control={<Radio />} 
+             
                         label="Soft Chime" 
+                        control={<Radio checked={alarm == './softChime.mp3' } />}
                     />
                     <FormControlLabel 
-                        onChange={handleInputChange}
+                        onChange={handleChangeAlarmChoice}
                         value='./singingBowl.mp3'
-                        control={<Radio />} 
                         label="Singing Bowl"
+                        control={<Radio checked={alarm === './singingBowl.mp3'} />}
                     />
                     <FormControlLabel 
-                        onChange={handleInputChange}
+                        onChange={handleChangeAlarmChoice}
                         value="./ohm.mp3" 
-                        control={<Radio />} 
+             
                         label="Ohm" 
+                        control={<Radio checked={alarm === './ohm.mp3'} />}
                     /> 
                 </RadioGroup>
             </StackRow>
-            <Volume 
-            volume={volume}
-            setVolume={setVolume}
-            />
         </>
-    );
+    )
 }
 
-// Styled components using MUI's styled API
 const SoundChoiceTypography = styled(Typography)({
     fontSize: '1rem', 
     fontWeight: 'medium', 
@@ -118,4 +90,4 @@ const StackRow = styled(Stack)({
     justifyContent: 'space-between'
 });
 
-export default Sound
+export default Alarm;
