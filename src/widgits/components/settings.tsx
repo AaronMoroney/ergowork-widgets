@@ -4,12 +4,13 @@ import type { RootState } from '../../shared/store/store';
 import { useSelector } from 'react-redux';
 
 import { usePosture } from '../hooks/usePosture'
+import { formatTimeNumber } from "../helpers/PostureHelpers";
 import Sound  from '../../features/posture/settings/components/Sound';
 import Countdown  from '../../features/posture/settings/components/Countdown';
 import FormInput  from '../../features/posture/settings/components/FormInput'
 
 interface SettingsProps {
-    time: number;           
+    time: string;           
     setToggleSettings:(value: boolean) => void;
     fetchedSettings: {}
 }
@@ -26,10 +27,10 @@ const Settings: FC<SettingsProps> = ({ time, setToggleSettings }) => {
     
     let newUserSettings = {
         id: "posture",
-        alertMessage: message, //current only works with the current state of the message
+        alertMessage: message, 
         activeAlarm: alarm,
         volume: vol,
-        time: time,
+        time: formatTimeNumber(time), //slice expects time as number
         alert: alert
     }
 

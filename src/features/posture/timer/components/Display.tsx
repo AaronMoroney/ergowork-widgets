@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Button, styled, Stack, Typography } from "@mui/material";
 
 interface displayProps {
-    time: number,
+    time: string, 
 }
 
 const Display: FC<displayProps> = ({time}) => {

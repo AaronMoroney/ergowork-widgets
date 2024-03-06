@@ -1,6 +1,6 @@
 import { useCallback, useMemo,  useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from '../../shared/store/store'; // import your store's type
+import { AppDispatch } from '../../shared/store/store';
 
 import { activeAlarm } from "../../features/posture/settings/slice";
 import { start, stop } from "../helpers/PostureHelpers";

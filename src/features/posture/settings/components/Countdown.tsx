@@ -5,9 +5,10 @@ import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 
 import { useDispatch } from 'react-redux'
 import { decrementTime, incrementTime, alertChange } from '../slice'
+import { formatTimeNumber } from '../../../../widgits/helpers/PostureHelpers';
 
 interface countdownProps {
-    time: number,
+    time: string,
     alert: boolean, 
 }
 
@@ -15,12 +16,13 @@ const Countdown: FC<countdownProps> = ({ time, alert }) => {
     const dispatch = useDispatch();
 
     const handlePlusClick = () => {
-        dispatch(incrementTime());
+        dispatch(incrementTime(10));
     };
 
     const handleMinusClick = () => {
-        if (time > 1) {
-            dispatch(decrementTime());
+        let timeNumber = formatTimeNumber(time);
+        if (timeNumber > 1) {
+            dispatch(decrementTime(10));
         }
     };
     
@@ -31,7 +33,7 @@ const Countdown: FC<countdownProps> = ({ time, alert }) => {
     return (
         <>
             <TitleTypography variant="h3">
-                Set interval minutes
+                Set interval
             </TitleTypography>
             <IntervalStack spacing={2} direction="row">
                 <TimeDisplayStack>

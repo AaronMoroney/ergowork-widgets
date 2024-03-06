@@ -14,9 +14,9 @@ import type { AppDispatch } from '../../shared/store/store';
 import type { RootState } from '../../shared/store/store';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchSettings } from "../../shared/api/postureAPI";
+import { formatTimeString } from "../helpers/PostureHelpers";
 
 function PostureWidget() {
-    //can leave the toggle as react state
     const [toggleSettings, setToggleSettings] = useState(false); 
     const dispatch = useDispatch<AppDispatch>();
    
@@ -25,6 +25,7 @@ function PostureWidget() {
     }, []); 
 
     const fetchedSettings = useSelector((state: RootState) => state.userSettingsState.userSettings);
+    let timeConvert = formatTimeString(fetchedSettings.time);
 
     return (
         <>
@@ -46,12 +47,12 @@ function PostureWidget() {
                     {toggleSettings ? 
                     <Settings
                         fetchedSettings={fetchedSettings}
-                        time={fetchedSettings.time}
+                        time={timeConvert}
                         setToggleSettings={setToggleSettings}
                     /> 
                     :
                     <Display
-                        time={fetchedSettings.time}
+                        time={timeConvert}
                     />
                     }
                 </ContentStack>

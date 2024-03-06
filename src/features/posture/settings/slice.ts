@@ -22,11 +22,11 @@ export const userSettingsSlice = createSlice({
     name: 'userSettings',
     initialState,
     reducers: {
-        incrementTime: (state, ) => {
-            state.userSettings.time += 1;
+        incrementTime: (state, action ) => {
+            state.userSettings.time += action.payload;
         },
-        decrementTime: (state) => {
-            state.userSettings.time -= 1;
+        decrementTime: (state, action) => {
+            state.userSettings.time -= action.payload;
         },
         volumeChange: (state, action) => {
             state.userSettings.volume = action.payload;

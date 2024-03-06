@@ -4,8 +4,8 @@
       "id": "postureSettings",
       "alertMessage": "message",
       "activeAlarm": "./singingBowl.mp3",
-      "volume": 9,
-      "time": 20,
+      "volume": 34,
+      "time": 270,
       "alert": false
     }
   ]
