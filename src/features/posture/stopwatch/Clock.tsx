@@ -1,17 +1,18 @@
 import { FC } from "react";
 import { Button, styled, Stack, Typography } from "@mui/material";
 
-interface displayProps {
+interface ClockProps {
     time: string, 
 }
 
-const Display: FC<displayProps> = ({time}) => {
+const Clock: FC<ClockProps> = ({time}) => {
+    //countdown logic
     return (
         <>
             <TimerTypography>{time}</TimerTypography>
             <StackRow>
                 <StyledButton>Start</StyledButton>
-                <StyledButton>Stop</StyledButton>
+                <StyledButton>Reset</StyledButton>
             </StackRow>
         </>
     )
@@ -31,4 +32,4 @@ const TimerTypography = styled(Typography)({
     fontSize: '100px'
 })
 
-export default Display
+export default Clock

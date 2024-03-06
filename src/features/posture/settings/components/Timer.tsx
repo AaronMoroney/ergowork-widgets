@@ -12,17 +12,17 @@ interface countdownProps {
     alert: boolean, 
 }
 
-const Countdown: FC<countdownProps> = ({ time, alert }) => {
+const Timer: FC<countdownProps> = ({ time, alert }) => {
     const dispatch = useDispatch();
 
     const handlePlusClick = () => {
-        dispatch(incrementTime(10));
+        dispatch(incrementTime(30));
     };
 
     const handleMinusClick = () => {
         let timeNumber = formatTimeNumber(time);
         if (timeNumber > 1) {
-            dispatch(decrementTime(10));
+            dispatch(decrementTime(30));
         }
     };
     
@@ -63,7 +63,7 @@ const Countdown: FC<countdownProps> = ({ time, alert }) => {
     );
 }
 
-export default Countdown;
+export default Timer;
 
 // Styled components
 const TitleTypography = styled(Typography)({

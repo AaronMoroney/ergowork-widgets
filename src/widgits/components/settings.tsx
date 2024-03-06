@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { usePosture } from '../hooks/usePosture'
 import { formatTimeNumber } from "../helpers/PostureHelpers";
 import Sound  from '../../features/posture/settings/components/Sound';
-import Countdown  from '../../features/posture/settings/components/Countdown';
+import Countdown  from '../../features/posture/settings/components/Timer';
 import FormInput  from '../../features/posture/settings/components/FormInput'
 
 interface SettingsProps {

@@ -6,15 +6,16 @@ import {
     styled
 } from "@mui/material";
 import SettingsIcon from '@mui/icons-material/Settings';
-import Settings from "./settings";
-import Display from "../../features/posture/timer/components/Display";
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import type { AppDispatch } from '../../shared/store/store';
+import { useSelector, useDispatch } from 'react-redux';
 
 import type { RootState } from '../../shared/store/store';
-import { useSelector, useDispatch } from 'react-redux';
 import { fetchSettings } from "../../shared/api/postureAPI";
 import { formatTimeString } from "../helpers/PostureHelpers";
+import Settings from "./Settings";
+import Display from "./Display";
+
 
 function PostureWidget() {
     const [toggleSettings, setToggleSettings] = useState(false); 
