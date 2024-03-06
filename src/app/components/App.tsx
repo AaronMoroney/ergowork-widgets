@@ -1,12 +1,12 @@
 import Box from '@mui/material/Box';
 import Container  from "@mui/material/Container";
-import  Timer   from '../../features/posture/PostureWidget'
+import Posture   from '../../widgits/components/posture'
 
 function App() {
   return (
     <Box sx={{ height: "100vh" }}>
       <Container maxWidth="sm" sx={{ py: 2 }}>
-        <Timer />
+        <Posture />
       </Container>
     </Box>
   );

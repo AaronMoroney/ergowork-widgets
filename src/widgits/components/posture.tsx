@@ -6,14 +6,14 @@ import {
     styled
 } from "@mui/material";
 import SettingsIcon from '@mui/icons-material/Settings';
-import Settings from "./Settings";
-import Display from "./components/Display";
+import Settings from "./settings";
+import Display from "../../features/posture/timer/components/Display";
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
-import type { AppDispatch } from '../../app/redux/store';
+import type { AppDispatch } from '../../shared/store/store';
 
-import type { RootState } from '../../app/redux/store';
+import type { RootState } from '../../shared/store/store';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchSettings } from "./redux/postureAPI";
+import { fetchSettings } from "../../shared/api/postureAPI";
 
 function PostureWidget() {
     //can leave the toggle as react state

@@ -4,7 +4,7 @@ import ThemeProvider from "@mui/material/styles/ThemeProvider"
 import CssBaseline from '@mui/material/CssBaseline';
 import { createRoot } from "react-dom/client";
 import { App } from './app';
-import { store } from './app/redux/store'
+import { store } from './shared/store/store'
 import { Provider } from 'react-redux'
 
 

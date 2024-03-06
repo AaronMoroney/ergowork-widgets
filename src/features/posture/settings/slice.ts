@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchSettings, updateSettings } from './postureAPI';
-import { UserSettingsType } from '../../../types/UserSettingsType';
+import { fetchSettings, updateSettings } from '../../../shared/api/postureAPI';
+import { UserSettingsType } from '../../../shared/types/UserSettingsType';
 
 export interface userSettingsState {
     userSettings: UserSettingsType,

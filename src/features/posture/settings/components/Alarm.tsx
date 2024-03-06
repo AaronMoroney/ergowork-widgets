@@ -3,7 +3,7 @@ import { RadioGroup, Radio, Stack, Typography,FormControlLabel, Button,styled } 
 import VolumeOffRoundedIcon from '@mui/icons-material/VolumeOffRounded';
 import PlayCircleOutlineRoundedIcon from '@mui/icons-material/PlayCircleOutlineRounded';
 
-import { usePosture  } from '../hooks/usePosture';
+import { usePosture  } from '../../../../widgits/hooks/usePosture';
 
 interface AlarmProps {
     alarm: string;

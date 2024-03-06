@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { UserSettingsType } from '../../../types/UserSettingsType';
+import { UserSettingsType } from '../types/UserSettingsType';
 
 const url = 'http://localhost:3000/userSettings';
 const headers = { 'Content-Type': 'application/json' };

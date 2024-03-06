@@ -1,16 +1,16 @@
 import { useRef, FC } from "react";
 import { Button, styled } from "@mui/material";
-import type { RootState } from '../../app/redux/store';
+import type { RootState } from '../../shared/store/store';
 import { useSelector } from 'react-redux';
 
-import { usePosture } from './hooks/usePosture'
-import Sound  from './components/Sound';
-import Countdown  from './components/Countdown';
-import FormInput  from './components/FormInput'
+import { usePosture } from '../hooks/usePosture'
+import Sound  from '../../features/posture/settings/components/Sound';
+import Countdown  from '../../features/posture/settings/components/Countdown';
+import FormInput  from '../../features/posture/settings/components/FormInput'
 
 interface SettingsProps {
     time: number;           
-    setToggleSettings:(value: boolean)=> void;
+    setToggleSettings:(value: boolean) => void;
     fetchedSettings: {}
 }
 
@@ -23,10 +23,10 @@ const Settings: FC<SettingsProps> = ({ time, setToggleSettings }) => {
     const message = useSelector((state: RootState) => state.userSettingsState.userSettings.alertMessage); //vol state
 
     const messageRef = useRef(null);
-
+    
     let newUserSettings = {
         id: "posture",
-        alertMessage: message,
+        alertMessage: message, //current only works with the current state of the message
         activeAlarm: alarm,
         volume: vol,
         time: time,
@@ -42,7 +42,7 @@ const Settings: FC<SettingsProps> = ({ time, setToggleSettings }) => {
         <>
             <FormInput 
                 message={message} 
-                ref={messageRef.current}
+                ref={messageRef}
             />
             <Sound 
                 alarm={alarm}

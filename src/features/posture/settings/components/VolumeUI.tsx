@@ -4,7 +4,7 @@ import VolumeDown from '@mui/icons-material/VolumeDown';
 import { Slider, Stack, Typography, styled } from "@mui/material";
 import { useDispatch } from 'react-redux';
 
-import { volumeChange } from '../redux/userSettingsSlice';
+import { volumeChange } from '../slice';
 
 interface VolumeProps {
     currentVolume: number | number[],

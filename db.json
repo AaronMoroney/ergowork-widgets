@@ -2,10 +2,10 @@
   "userSettings": [
     {
       "id": "postureSettings",
-      "alertMessage": "message here",
-      "activeAlarm": "./ohm.mp3",
-      "volume": 99,
-      "time": 25,
+      "alertMessage": "message",
+      "activeAlarm": "./singingBowl.mp3",
+      "volume": 9,
+      "time": 20,
       "alert": false
     }
   ]

@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import postureReducer from "../../features/posture/redux/userSettingsSlice";
+import postureReducer from "../../features/posture/settings/slice";
 
 export const store = configureStore({
     reducer: {

@@ -4,7 +4,7 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 
 import { useDispatch } from 'react-redux'
-import { decrementTime, incrementTime, alertChange } from '../redux/userSettingsSlice'
+import { decrementTime, incrementTime, alertChange } from '../slice'
 
 interface countdownProps {
     time: number,

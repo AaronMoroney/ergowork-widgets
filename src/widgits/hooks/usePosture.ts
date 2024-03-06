@@ -1,11 +1,11 @@
 import { useCallback, useMemo,  useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from '../../../app/redux/store'; // import your store's type
+import { AppDispatch } from '../../shared/store/store'; // import your store's type
 
-import { activeAlarm } from "../redux/userSettingsSlice";
+import { activeAlarm } from "../../features/posture/settings/slice";
 import { start, stop } from "../helpers/PostureHelpers";
-import { updateSettings } from "../redux/postureAPI";
-import { UserSettingsType } from "../../../types/UserSettingsType";
+import { updateSettings } from "../../shared/api/postureAPI";
+import { UserSettingsType } from "../../shared/types/UserSettingsType";
 
 export function usePosture() {
     const [play, setPlay] = useState(false);
